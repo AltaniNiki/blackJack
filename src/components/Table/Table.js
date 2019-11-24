@@ -7,9 +7,13 @@ class Table extends Component{
     render(){
         return(
             <div className="tableContainer">
-                <Hand/>
+                <Hand 
+                 type='dealer'
+                 />
                 <Interface/>
-                <Hand/>
+                <Hand
+                type='player'
+                />
             </div>
         )
     }
