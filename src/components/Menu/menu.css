@@ -1,0 +1,43 @@
+.menu-container{
+    background-color:#020202d4;
+    /* width:100vw; */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+ 
+}
+
+
+.menu-icon-card{
+ display: flex;
+ justify-content: center;
+ margin-right:120px;
+}
+
+.title-game{
+    color:white;
+    font-size:30px;
+    font-weight: 900;
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+}
+
+.button-start-container{
+    display: flex;
+    justify-content: center;
+    margin-top:20px;
+  
+}
+
+.btn-start{
+  width:120px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.btn-start:hover{
+background-color:red;
+color:white;
+}

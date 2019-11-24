@@ -8,7 +8,7 @@ import reducer from './reducers/index.js';
 
 const store=createStore(reducer);
 
-store.subscribe(()=>console.log('store getState()',store.getStore()));
+// store.subscribe(()=>console.log('store getState()',store.getStore()));
 
 ReactDOM.render(
     <Provider store={store}>
