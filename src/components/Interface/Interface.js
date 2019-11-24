@@ -1,28 +1,23 @@
 import React, {Component} from 'react';
 import './Interface.css';
 import { connect } from 'react-redux';
-import {addCardPlayer} from '../../actions/index.js';
+import {addCardPlayer,addScorePlayer} from '../../actions/index.js';
+import {randomCard} from '../helper.js';
 
-const validCard=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-const validCardType=['spades','hearts','clubs','diams'];
 
 class Interface extends Component{
     
     onAddPlayerCard=()=>{
-        let selectedCard = validCard[Math.floor(Math.random()*validCard.length)];
-        let selectedCardType=validCardType[Math.floor(Math.random()*validCardType.length)];
-        
-        let newCard={
-            cardValue:selectedCard,
-            cardSchema:selectedCard,
-            cardType:selectedCardType
-        }
-        let oldPlayerHand = this.props.playerHand;
-        console.log('oldPlayerHand',+oldPlayerHand);
-        let newPlayerHand = {...oldPlayerHand,newCard};
-        console.log('newPlayerHand',+newPlayerHand);
-        // this.props.addCardPlayer(newPlayerHand)
-        
+
+        let newCardPlayer = randomCard();
+        let oldPlayerHand = [...this.props.playerHand];
+        let newPlayerHand = [...oldPlayerHand,newCardPlayer];
+        this.props.addCardPlayer(newPlayerHand);
+        /* Update score Player */
+        let oldScorePlayer = this.props.scorePlayer;
+        let newScorePlayer = oldScorePlayer + newCardPlayer.cardValue;
+        this.props.addScorePlayer(newScorePlayer);
+
     }
 
     render(){
@@ -35,7 +30,7 @@ class Interface extends Component{
                         Dealer Score:
                     </div>
                     <div className="score-value">
-                        7
+                        {this.props.scoreDealer}
                     </div>
                 </div>
 
@@ -44,7 +39,7 @@ class Interface extends Component{
                         Player Score:
                     </div>
                     <div className="score-value">
-                        10
+                       {this.props.scorePlayer}
                     </div>
                 </div>
               </div>
@@ -71,9 +66,11 @@ class Interface extends Component{
 
 function mapStateToProps(state){
     return{
-        playerHand:state.playerHand
+        playerHand:state.playerHand,
+        scorePlayer:state.scorePlayer,
+        scoreDealer:state.scoreDealer
     }
     
 }
 
-export default connect(mapStateToProps,{addCardPlayer})(Interface);
+export default connect(mapStateToProps,{addCardPlayer,addScorePlayer})(Interface);

@@ -2,9 +2,38 @@ import React ,{Component}from 'react';
 import '../Card/assets/cards.css';
 import './menu.css';
 import { connect } from 'react-redux';
-import {pageChange} from '../../actions/index.js'
+import {pageChange,addCardPlayer,addCardDealer,addScorePlayer,addScoreDealer} from '../../actions/index.js'
+import {randomCard} from '../helper.js';
+
 
 class Menu extends Component{
+
+    onStartGame=()=>{
+        let newCardDealer = randomCard();
+        let newCardPlayer = randomCard();
+    /* Player Card*/
+        let oldPlayerHand = [...this.props.playerHand];
+        let newPlayerHand = [...oldPlayerHand,newCardPlayer];
+        this.props.addCardPlayer(newPlayerHand)
+    /* Dealer Card */
+        let oldDealerHand = [...this.props.dealerHand];
+        let newDealerHand = [...oldDealerHand,newCardDealer];
+        this.props.addCardDealer(newDealerHand)
+
+    /*  score Player */
+        let oldScorePlayer = this.props.scorePlayer;
+        let newScorePlayer = oldScorePlayer + newCardPlayer.cardValue;
+        this.props.addScorePlayer(newScorePlayer);
+
+    /* score Dealer */    
+        let oldScoreDealer = this.props.scoreDealer;
+        let newScoreDealer = oldScoreDealer + newCardDealer.cardValue;
+        this.props.addScoreDealer(newScoreDealer);
+
+    /* chane page */
+        this.props.pageChange('Table')  
+    }
+
     render(){
         return(
             <div className='menu-container'>
@@ -46,16 +75,22 @@ class Menu extends Component{
                 </div>
               
                 <div className="button-start-container">
-                    <button className="btn-start" onClick={()=>this.props.pageChange('Table')}>Let's Play</button>
+                    <button className="btn-start" onClick={()=>this.onStartGame()}>Let's Play</button>
                 </div>
               
             </div>
         )
     }
 }
+
+
 function mapStateToProps(state){
     return{
-        page:state.page
+        page:state.page,
+        playerHand:state.playerHand,
+        dealerHand:state.dealerHand,
+        scorePlayer:state.scorePlayer,
+        scoreDealer:state.scoreDealer
     }
 }
-export default connect(mapStateToProps,{pageChange})(Menu);
+export default connect(mapStateToProps,{pageChange,addCardPlayer,addCardDealer,addScorePlayer,addScoreDealer})(Menu);
