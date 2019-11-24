@@ -12,7 +12,7 @@ class Card extends Component{
      
        if (this.props.classCard === 'back'){
            return(
-            <div class="card back">
+            <div className="card back">
                 *
             </div>
         
