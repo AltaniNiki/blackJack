@@ -5,3 +5,17 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.player-container{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+}
+
+.hand-player{
+    width:70%;
+}
+
+.pot-player-container{
+    width:30%;
+}

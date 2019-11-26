@@ -58,3 +58,27 @@
     background-color:#DA534F;
     color:white;
 }
+
+.winner-container{
+    border-radius: 7px;
+    margin-bottom:10px;
+    display: flex;
+    justify-content: center;
+    background-color:rgba(255, 0, 0, 0.507);
+    color:white;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-weight: 600;
+}
+
+.inactiveWinner{
+    display:none
+}
+
+.disable-btn{
+    background-color:#ffffffad;
+    color:black;
+    cursor: not-allowed;
+    pointer-events: none;
+    
+}
