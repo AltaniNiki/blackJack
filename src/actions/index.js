@@ -5,6 +5,7 @@ export const SCOREPLAYER = 'SCOREPLAYER';
 export const SCOREDEALER = 'SCOREDEALER';
 export const WINNERGAME = 'WINNERGAME';
 export const BETTING_CALC= 'BETTING_CALC';
+export const CLEARHAND = 'CLEARHANR'; 
 
 export function pageChange(page){
 
@@ -61,5 +62,14 @@ export function calculateBetting(pot){
         type:BETTING_CALC,
         payload:pot
     }
+    return action;
+}
+
+export function clearHand(hand){
+    const action={
+        type:CLEARHAND,
+        payload:hand
+    }
+
     return action;
 }

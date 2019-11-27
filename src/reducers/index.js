@@ -1,4 +1,4 @@
-import {PAGE,ADDCARDPLAYER,ADDCARDDEALER,SCOREPLAYER,SCOREDEALER,WINNERGAME,BETTING_CALC} from '../actions/index.js'
+import {PAGE,ADDCARDPLAYER,ADDCARDDEALER,SCOREPLAYER,SCOREDEALER,WINNERGAME,BETTING_CALC,CLEARHAND} from '../actions/index.js'
 const initStore={
     playerHand:[],
     dealerHand:[],
@@ -27,6 +27,8 @@ function reducer(state=initStore,action){
             return{...state,winner:action.payload} 
         case BETTING_CALC:       
             return{...state,betting:action.payload}
+        case CLEARHAND:
+            return {...state,playerHand:action.payload,dealerHand:action.payload};  
         default:
             return state;
     }

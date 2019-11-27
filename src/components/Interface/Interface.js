@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import './Interface.css';
 import { connect } from 'react-redux';
-import {addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame} from '../../actions/index.js';
+import {addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame,clearHand} from '../../actions/index.js';
 import {randomCard} from '../helper.js';
+import { identifier } from '@babel/types';
 
 
 class Interface extends Component{
@@ -41,9 +42,20 @@ class Interface extends Component{
            
         }
 
-        this.props.addScoreDealer(tempScoreDealer)
+        this.props.addScoreDealer(tempScoreDealer);
+        this.onChooseWinner(tempScoreDealer);
     }
 
+    onChooseWinner=(tempScoreDealer)=>{
+        console.log(this.props.scorePlayer+' '+ tempScoreDealer);
+         if (tempScoreDealer <= 21 && tempScoreDealer > this.props.scorePlayer){
+            this.props.winnerGame('Dealer');
+        }else if(tempScoreDealer <= 21 && tempScoreDealer < this.props.scorePlayer){
+            this.props.winnerGame('Player');
+        }else if (tempScoreDealer <= 21 && tempScoreDealer == this.props.scorePlayer){
+            this.props.winnerGame('no one');
+        }
+    }
   
 
     render(){
@@ -75,7 +87,7 @@ class Interface extends Component{
 
               <div className="action-container">
 
-                <button className={this.props.winner !== ''?'deal-container':'deal-container disable-btn' }>
+                <button className={this.props.winner !== ''?'deal-container':'deal-container disable-btn' } onclick={()=>{this.props.clearHand([])}}> 
                     Next round
                 </button>
                 <button className={this.props.winner !== ''?'hit-container disable-btn':'hit-container' } onClick={()=>{this.onAddPlayerCard()}}  >
@@ -93,6 +105,7 @@ class Interface extends Component{
     }
 }
 
+
 function mapStateToProps(state){
     return{
         playerHand:state.playerHand,
@@ -104,4 +117,4 @@ function mapStateToProps(state){
     
 }
 
-export default connect(mapStateToProps,{addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame})(Interface);
+export default connect(mapStateToProps,{addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame,clearHand})(Interface);

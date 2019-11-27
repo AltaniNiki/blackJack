@@ -1,0 +1,55 @@
+.betting-top{
+    color:black;
+    text-align: center;
+    background-color:#5AC0DE ;
+    font-weight: 900;
+    font-size:15px;
+}
+/* #d6d61d */
+.betting-content{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.betting-money{
+    color:white;
+    text-align: center;
+}
+
+.pot-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top:5px;
+    padding:2px;
+}
+
+.minus-pot{
+   margin-right:5px;
+   background-color:#5AC0DE;
+   color:white;
+}
+
+.add-pot{
+    margin-left:5px;
+    background-color:#5AC0DE;
+    color:white;
+}
+
+.value-pot{
+    color:white;
+   
+}
+
+.betting-bottom{
+    display: flex;
+    justify-content: center;
+    margin-top:15px;
+}
+
+.betBtn{
+    color:white;
+    background-color: #439B44;
+
+}
