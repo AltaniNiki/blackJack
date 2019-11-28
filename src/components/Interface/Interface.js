@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './Interface.css';
 import { connect } from 'react-redux';
-import {addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame,clearHand} from '../../actions/index.js';
+import {addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame} from '../../actions/index.js';
 import {randomCard} from '../helper.js';
-import { identifier } from '@babel/types';
+import { throwStatement } from '@babel/types';
 
 
 class Interface extends Component{
@@ -57,6 +57,16 @@ class Interface extends Component{
         }
     }
   
+    clearHand=()=>{
+        console.log('clear hand');
+        this.props.addCardPlayer([]);
+        this.props.addCardDealer([]);
+        this.props.addScoreDealer(0);
+        this.props.addScorePlayer(0);
+
+    }
+
+    
 
     render(){
         return(
@@ -87,7 +97,7 @@ class Interface extends Component{
 
               <div className="action-container">
 
-                <button className={this.props.winner !== ''?'deal-container':'deal-container disable-btn' } onclick={()=>{this.props.clearHand([])}}> 
+                <button className={this.props.winner !== ''?'deal-container':'deal-container disable-btn' } onClick={()=>{this.clearHand() } }> 
                     Next round
                 </button>
                 <button className={this.props.winner !== ''?'hit-container disable-btn':'hit-container' } onClick={()=>{this.onAddPlayerCard()}}  >
@@ -117,4 +127,4 @@ function mapStateToProps(state){
     
 }
 
-export default connect(mapStateToProps,{addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame,clearHand})(Interface);
+export default connect(mapStateToProps,{addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame})(Interface);

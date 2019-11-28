@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import '../Betting/Betting.css';
-
+import {connect} from 'react-redux';
+import { throwStatement } from '@babel/types';
 
 class Betting extends Component{
     
@@ -12,12 +13,12 @@ class Betting extends Component{
                 </div>
                 <div className="betting-content">
                     <div className="betting-money">
-                            Money: 100
+                            Money: {this.props.money}
                     </div>
 
                     <div className="pot-container">
                         <button className="minus-pot">-</button>
-                        <div className="value-pot">20</div>
+                        <div className="value-pot"> {this.props.bet}</div>
                         <button className="add-pot">+</button>
                     </div>
                 </div>
@@ -31,4 +32,11 @@ class Betting extends Component{
 }
 
 
-export default Betting;
+function mapStateToProps(state){
+    return{
+        money:state.money,
+        bet:state.bet
+    }
+}
+
+export default connect(mapStateToProps,null)(Betting);
