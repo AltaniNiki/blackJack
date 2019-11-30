@@ -2,3 +2,11 @@
     height: 100vh;
     margin:0px;
 }
+
+.disable-btn{
+    background-color:#ffffffad;
+    color:black;
+    cursor: not-allowed;
+    pointer-events: none;
+    
+}

@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.js'
 
-import { createStore,applyMiddleware,compose } from 'redux';
+import { createStore,applyMiddleware,compose} from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers/index.js';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-/*const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;*/
-const store=createStore(reducer/*,composeWithDevTools(
+const composeEnhancers = composeWithDevTools(window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose);
+const store=createStore(reducer/*,composeEnhancers(
     applyMiddleware(...middleware)
   )*/);
 

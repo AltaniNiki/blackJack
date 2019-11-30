@@ -15,7 +15,7 @@ class Table extends Component{
                  />
                 <Interface/>
 
-                <div class="player-container">
+                <div className="player-container">
 
                     <div className="hand-player">
                         <Hand

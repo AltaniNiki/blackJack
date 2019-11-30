@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './Interface.css';
 import { connect } from 'react-redux';
-import {addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame} from '../../actions/index.js';
+import {addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame,updateMoney,updateBet} from '../../actions/index.js';
 import {randomCard} from '../helper.js';
-import { throwStatement } from '@babel/types';
+
 
 
 class Interface extends Component{
@@ -18,52 +18,62 @@ class Interface extends Component{
         let oldScorePlayer = this.props.scorePlayer;
         let newScorePlayer = oldScorePlayer + newCardPlayer.cardValue;
         this.props.addScorePlayer(newScorePlayer);
-        console.log(newScorePlayer);
+    
         if (newScorePlayer >21){
-            console.log('mphka');
             this.props.winnerGame('Dealer');
+            this.updateMoneyBetAfterWin(0);
         } 
     }
 
     onStandAction=()=>{
         let tempScoreDealer = this.props.scoreDealer;
-        // console.log('temp init',tempScoreDealer);
+        let oldDealerHand = [...this.props.dealerHand];
 
         while (tempScoreDealer < this.props.scorePlayer){
             let newCardDealer = randomCard();
-            // console.log('newCardDealer',newCardDealer);
-
-            let oldDealerHand = [...this.props.dealerHand];
-            let newDealerHand = [...oldDealerHand,newCardDealer];
-            this.props.addCardDealer(newDealerHand);
-            
+            oldDealerHand = [...oldDealerHand,newCardDealer];
             tempScoreDealer = tempScoreDealer + newCardDealer.cardValue;
-            // console.log('tempScoreDealer',tempScoreDealer);
            
         }
+        let newDealerHand = oldDealerHand;
+        this.props.addCardDealer(newDealerHand);
 
         this.props.addScoreDealer(tempScoreDealer);
         this.onChooseWinner(tempScoreDealer);
     }
 
     onChooseWinner=(tempScoreDealer)=>{
-        console.log(this.props.scorePlayer+' '+ tempScoreDealer);
          if (tempScoreDealer <= 21 && tempScoreDealer > this.props.scorePlayer){
             this.props.winnerGame('Dealer');
+            this.updateMoneyBetAfterWin(0);
         }else if(tempScoreDealer <= 21 && tempScoreDealer < this.props.scorePlayer){
             this.props.winnerGame('Player');
+            this.updateMoneyBetAfterWin(1);
         }else if (tempScoreDealer <= 21 && tempScoreDealer == this.props.scorePlayer){
             this.props.winnerGame('no one');
+        }else if(tempScoreDealer >21){
+            this.props.winnerGame('Player');
+            this.updateMoneyBetAfterWin(1);
         }
     }
+
+   updateMoneyBetAfterWin=(result)=>{
+    if (result ===1){
+        let oldMoney = this.props.money;
+        let newMoney = (this.props.bet * 2)+oldMoney;
+        this.props.updateMoney(newMoney);
+        this.props.updateBet(0)
+    }else if(result === 0){
+        this.props.updateBet(0)
+    }
+   }
   
     clearHand=()=>{
-        console.log('clear hand');
+    
         this.props.addCardPlayer([]);
         this.props.addCardDealer([]);
         this.props.addScoreDealer(0);
         this.props.addScorePlayer(0);
-
     }
 
     
@@ -73,6 +83,10 @@ class Interface extends Component{
             <div className='interface-container'>
               <div className={this.props.winner !== ''? 'winner-container':'winner-container inactiveWinner'}>
                  <div> The winner is {this.props.winner} !</div>
+              </div>
+
+              <div className={(this.props.bet == 0 && this.props.winner === '')? 'isbetting-container':'isbetting-container inactiveWinner'}>
+                 <div> Please bet money!</div>
               </div>
 
               <div className='score-container'>  
@@ -100,10 +114,10 @@ class Interface extends Component{
                 <button className={this.props.winner !== ''?'deal-container':'deal-container disable-btn' } onClick={()=>{this.clearHand() } }> 
                     Next round
                 </button>
-                <button className={this.props.winner !== ''?'hit-container disable-btn':'hit-container' } onClick={()=>{this.onAddPlayerCard()}}  >
+                <button className={(this.props.winner !== '' || this.props.bet === 0)?'hit-container disable-btn':'hit-container' } onClick={()=>{this.onAddPlayerCard()}}  >
                     Hit
                 </button>
-                <button className={this.props.winner !== ''?'stand-container disable-btn':'stand-container' } onClick={()=>{this.onStandAction()}}>
+                <button className={(this.props.winner !== '' || this.props.bet === 0) ?'stand-container disable-btn':'stand-container' } onClick={()=>{this.onStandAction()}}>
                     Stand
                 </button>
               
@@ -122,9 +136,11 @@ function mapStateToProps(state){
         dealerHand:state.dealerHand,
         scorePlayer:state.scorePlayer,
         scoreDealer:state.scoreDealer,
-        winner:state.winner
+        winner:state.winner,
+        money:state.money,
+        bet:state.bet
     }
     
 }
 
-export default connect(mapStateToProps,{addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame})(Interface);
+export default connect(mapStateToProps,{addCardPlayer,addScorePlayer,addCardDealer,addScoreDealer,winnerGame,updateMoney,updateBet})(Interface);

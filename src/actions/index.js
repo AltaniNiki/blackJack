@@ -5,6 +5,7 @@ export const SCOREPLAYER = 'SCOREPLAYER';
 export const SCOREDEALER = 'SCOREDEALER';
 export const WINNERGAME = 'WINNERGAME';
 export const UPDATEBET= 'UPDATEBET';
+export const UPDATEMONEY = 'UPDATEMONEY'
 
 
 export function pageChange(page){
@@ -64,3 +65,13 @@ export function updateBet(pot){
     }
     return action;
 }
+
+export function updateMoney(money){
+    const action={
+        type:UPDATEMONEY,
+        payload:money
+    }
+
+    return action;
+}
+
