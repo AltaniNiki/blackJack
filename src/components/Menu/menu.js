@@ -6,6 +6,7 @@ import {pageChange,addCardPlayer,addCardDealer,addScorePlayer,addScoreDealer} fr
 import {randomCard} from '../helper.js';
 
 
+
 class Menu extends Component{
 
     onStartGame=()=>{
@@ -77,7 +78,12 @@ class Menu extends Component{
                 <div className="button-start-container">
                     <button className="btn-start" onClick={()=>this.onStartGame()}>Let's Play</button>
                 </div>
-              
+
+                <div className="introductions" onClick={()=>this.props.pageChange('Introduction')}>
+                    <i className="material-icons">
+                        info_outline
+                    </i>
+                </div>
             </div>
         )
     }

@@ -1,0 +1,38 @@
+.introduction-container{
+    background-color:#020202d4;
+    height: 100vh;
+}
+
+.title-containt{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
+}
+.title{
+    color:white;
+    font-family: monospace;
+    font-size: 29px;
+    text-align: center;
+    padding:5px;
+}
+
+.material-icons{
+    display: flex;
+    align-items: center;
+}
+
+.basic-intro{
+    padding:5px;
+}
+
+.subtitle{
+    color:white;
+    font-family: monospace;
+    font-size:20px;
+}
+
+.paragraph{
+    color:white;
+}
+
