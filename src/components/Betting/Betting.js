@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import '../Betting/Betting.css';
 import {connect} from 'react-redux';
-import {updateBet,updateMoney} from '../../actions/index.js';
+import {updateBet,updateMoney, pageChange,addCardPlayer,addCardDealer,addScoreDealer,addScorePlayer,winnerGame} from '../../actions/index.js';
 
 
 class Betting extends Component{
@@ -19,6 +19,15 @@ class Betting extends Component{
        this.props.updateMoney(newMoney);
     }
 
+    onCheckOut=()=>{
+
+        this.props.addCardPlayer([]);
+        this.props.addCardDealer([]);
+        this.props.addScoreDealer(0);
+        this.props.addScorePlayer(0);
+        this.props.winnerGame('');
+        this.props.pageChange('Menu');
+    }
     
     render(){
         return(
@@ -35,7 +44,11 @@ class Betting extends Component{
                         <button className={this.props.bet>0 ?"minus-pot":'minus-pot disable-btn'}  onClick={()=>{this.changeBet(-5)}}>-</button>
                         <div className="value-pot"> {this.props.bet}</div>
                         <button className="add-pot" onClick={()=>{this.changeBet(5)}}>+</button>
+                     
                     </div>
+                    <div className="check-out">
+                          <button onClick={()=>{this.onCheckOut()}}> Check Out</button>
+                        </div> 
                 </div>
 {/* 
                 <div className="betting-bottom">
@@ -54,4 +67,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{updateBet,updateMoney})(Betting);
+export default connect(mapStateToProps,{updateBet,updateMoney,pageChange,addCardPlayer,addCardDealer,addScoreDealer,addScorePlayer,winnerGame})(Betting);
